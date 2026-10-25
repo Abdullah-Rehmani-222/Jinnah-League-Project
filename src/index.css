@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --jl-dark: #0a0a0f;
+  --jl-darker: #050508;
+  --jl-purple: #8b5cf6;
+  --jl-pink: #ec4899;
+  --jl-magenta: #d946ef;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* clear the fixed navbar for #anchor links */
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--jl-dark);
+  color: #e5e7eb;
+  overflow-x: hidden;
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #ec4899, #d946ef, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-pink {
+  background: linear-gradient(135deg, #f472b6, #ec4899, #db2777);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Section divider - smoky/cloudy border */
+.section-divider {
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    rgba(139, 92, 246, 0.05) 20%,
+    rgba(139, 92, 246, 0.1) 50%,
+    rgba(139, 92, 246, 0.05) 80%,
+    transparent 100%
+  );
+  height: 80px;
+  position: relative;
+  /* Sit on the seam between two padded sections rather than stacking on top of
+     their padding (which created ~240px of dead space), and never block clicks. */
+  margin: -40px 0;
+  pointer-events: none;
+}
+
+.section-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.3), transparent);
+}
+
+/* Card glow effect */
+.card-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-glow::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), transparent, rgba(236, 72, 153, 0.2));
+  z-index: -1;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply inline-flex items-center justify-center px-6 py-2.5 font-heading font-semibold text-sm tracking-widest uppercase text-white rounded-sm transition-all duration-300;
+  background: linear-gradient(135deg, #db2777, #ec4899);
+  border: 1px solid rgba(236, 72, 153, 0.5);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #be185d, #db2777);
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  @apply inline-flex items-center justify-center px-6 py-2.5 font-heading font-semibold text-sm tracking-widest uppercase text-white rounded-sm transition-all duration-300;
+  background: transparent;
+  border: 1px solid rgba(139, 92, 246, 0.5);
+}
+
+.btn-outline:hover {
+  border-color: rgba(139, 92, 246, 0.8);
+  background: rgba(139, 92, 246, 0.1);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Hero background */
+.hero-bg {
+  position: relative;
+  background: linear-gradient(180deg, 
+    rgba(88, 28, 135, 0.4) 0%, 
+    rgba(30, 10, 60, 0.8) 50%, 
+    #0a0a0f 100%
+  );
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.5);
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
