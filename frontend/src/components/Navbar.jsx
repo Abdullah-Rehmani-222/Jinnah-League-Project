@@ -113,7 +113,7 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -5 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute top-full left-0 mt-1 w-52 bg-jl-darker/80 border border-jl-card-border rounded-lg shadow-xl shadow-black/50 overflow-hidden"
+                        className="absolute top-full left-0 mt-1 w-52 bg-jl-darker/80 border-none border-jl-card-border rounded-lg shadow-xl shadow-black/50 overflow-hidden"
                       >
                         {aboutDropdownItems.map((item) => (
                           <Link
