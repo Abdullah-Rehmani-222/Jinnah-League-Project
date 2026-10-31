@@ -37,7 +37,7 @@ body {
 }
 
 .gradient-text-pink {
-  background: linear-gradient(135deg, #f472b6, #ec4899, #db2777);
+  background: linear-gradient(90deg, #7968da 30%, #e4338c 70%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -90,19 +90,19 @@ body {
 
 /* Button styles */
 .btn-primary {
-  @apply inline-flex items-center justify-center px-6 py-2.5 font-heading font-semibold text-sm tracking-widest uppercase text-white rounded-sm transition-all duration-300;
-  background: linear-gradient(135deg, #db2777, #ec4899);
-  border: 1px solid rgba(236, 72, 153, 0.5);
+  @apply inline-flex items-center justify-center px-6 py-2.5 font-heading font-semibold text-sm tracking-widest uppercase text-white rounded-lg transition-all duration-300;
+  background: linear-gradient(155deg, #6051b4, #e4338c);
+  border: none;
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #be185d, #db2777);
+  background: linear-gradient(155deg, #4837aa, #be2b75);
   box-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
   transform: translateY(-1px);
 }
 
 .btn-outline {
-  @apply inline-flex items-center justify-center px-6 py-2.5 font-heading font-semibold text-sm tracking-widest uppercase text-white rounded-sm transition-all duration-300;
+  @apply inline-flex items-center justify-center px-6 py-2.5 font-heading font-semibold text-sm tracking-widest uppercase text-white rounded-lg transition-all duration-300;
   background: transparent;
   border: 1px solid rgba(139, 92, 246, 0.5);
 }

@@ -67,7 +67,7 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-jl-darker/95 backdrop-blur-md shadow-lg shadow-black/30'
+          ? 'bg-jl-darker/30 backdrop-blur-md shadow-lg shadow-black/30'
           : 'bg-transparent'
       }`}
     >
@@ -94,8 +94,8 @@ export default function Navbar() {
                     aria-expanded={aboutOpen}
                     className={`flex items-center gap-1 px-3 py-2 text-xs font-heading font-semibold tracking-widest uppercase transition-colors duration-200 ${
                       location.pathname === '/about'
-                        ? 'text-jl-pink'
-                        : 'text-gray-300 hover:text-white'
+                        ? 'text-pink-500'
+                        : 'text-gray-300 hover:text-jl-purple'
                     }`}
                   >
                     {link.label}
@@ -113,7 +113,7 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -5 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute top-full left-0 mt-1 w-52 bg-jl-darker/95 backdrop-blur-md border border-jl-card-border rounded-sm shadow-xl shadow-black/50 overflow-hidden"
+                        className="absolute top-full left-0 mt-1 w-52 bg-jl-darker/80 border border-jl-card-border rounded-lg shadow-xl shadow-black/50 overflow-hidden"
                       >
                         {aboutDropdownItems.map((item) => (
                           <Link
@@ -134,8 +134,8 @@ export default function Navbar() {
                   to={link.to}
                   className={`px-3 py-2 text-xs font-heading font-semibold tracking-widest uppercase transition-colors duration-200 ${
                     location.pathname === link.to
-                      ? 'text-jl-pink'
-                      : 'text-gray-300 hover:text-white'
+                      ? 'text-pink-500'
+                      : 'text-gray-300 hover:text-jl-purple'
                   }`}
                 >
                   {link.label}

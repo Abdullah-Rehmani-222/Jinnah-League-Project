@@ -43,8 +43,8 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-jl-darker/80 backdrop-blur-sm border-t border-jl-card-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className="bg-jl-darker/70 border-none border-jl-card-border">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {footerSections.map((section) => (
             <div key={section.title}>
@@ -102,9 +102,9 @@ export default function Footer() {
           </div>
         </div>
       </div>
-
+   <hr className='border-t border-white/10 max-w-7xl mx-auto'/>
       {/* Bottom bar */}
-      <div className="border-t border-jl-card-border">
+      <div className="border-jl-card-border pb-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-500">
           <p>© 2026 JINNAH LEAGUE. ALL RIGHTS RESERVED.</p>
           <div className="flex gap-4">

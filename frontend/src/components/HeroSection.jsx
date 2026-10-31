@@ -42,7 +42,7 @@ export default function HeroSection({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="font-heading font-bold text-lg md:text-xl tracking-[0.2em] uppercase text-gray-200 mb-3"
+            className="font-heading font-normal text-lg md:text-xl tracking-[0.2em] uppercase text-gray-200 mb-3"
           >
             {subtitle}
           </motion.p>
