@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import HomePage from './pages/HomePage'
@@ -8,6 +9,9 @@ import ContactPage from './pages/ContactPage'
 import GalleryPage from './pages/GalleryPage'
 import MediaPage from './pages/MediaPage'
 import JL26Page from './pages/JL26Page'
+
+// The CMS is code-split so visitors to the public site never download it.
+const CmsApp = lazy(() => import('./cms/CmsApp'))
 
 export default function App() {
   return (
@@ -24,6 +28,14 @@ export default function App() {
         <Route path="gallery" element={<GalleryPage />} />
         <Route path="contact" element={<ContactPage />} />
       </Route>
+      <Route
+        path="admin/*"
+        element={
+          <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[#0b1324] text-sm text-slate-400">Loading…</div>}>
+            <CmsApp />
+          </Suspense>
+        }
+      />
     </Routes>
 
 

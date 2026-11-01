@@ -31,7 +31,7 @@ export default function JL26Page() {
     <>
       <HeroSection
         title="JL'26"
-        subtitle="BIGGER. BOLDER. BETTER."
+        subtitle="BE PART OF JL'26"
         description="THE MOST AMBITIOUS EDITION OF JINNAH LEAGUE YET"
         primaryBtn={<Link to="/contact" className="btn-primary">REGISTER NOW</Link>}
         secondaryBtn={<Link to="/sponsors" className="btn-outline">SPONSOR JL'26</Link>}

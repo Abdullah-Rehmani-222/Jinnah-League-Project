@@ -5,7 +5,7 @@ import HeroSection from '../components/HeroSection'
 
 const contactInfo = [
   { icon: Mail, label: 'Email', value: 'contact@jinnahleague.com' },
-  { icon: MapPin, label: 'Location', value: 'Mohammad Ali Jinnah University, Karachi' },
+  { icon: MapPin, label: 'Visit', value: 'Mohammad Ali Jinnah University, Karachi' },
   { icon: Phone, label: 'Phone', value: '+92 XXX XXXXXXX' },
   { icon: Clock, label: 'Response Time', value: 'Within 24-48 hours' },
 ]

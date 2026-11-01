@@ -7,6 +7,20 @@ export default {
   theme: {
     extend: {
       colors: {
+        cms: {
+          bg: '#0b1324',
+          side: '#0e1117',
+          surface: '#121b2f',
+          raised: '#18233b',
+          hover: '#1e2b48',
+          input: '#0d1527',
+          border: '#25324d',
+          text: '#e6ebf5',
+          muted: '#9aa8c1',
+          faint: '#6b7a96',
+          accent: '#3b82f6',
+          'accent-hover': '#2563eb',
+        },
         jl: {
           dark: '#0a0a0f',
           darker: '#050508',
