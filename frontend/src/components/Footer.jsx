@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { Facebook, Instagram, Twitter, Linkedin, Youtube, Mail } from 'lucide-react'
+import { Facebook, Instagram, Twitter, Linkedin, Youtube, Github, Send, MessageCircle, Globe, Mail } from 'lucide-react'
+import { usePublic, useSettings } from '../lib/publicApi'
 
 const footerSections = [
   {
@@ -32,16 +33,19 @@ const footerSections = [
   },
 ]
 
-const socialLinks = [
-  { icon: Facebook, href: '#', label: 'Facebook' },
-  { icon: Instagram, href: '#', label: 'Instagram' },
-  { icon: Twitter, href: '#', label: 'Twitter' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Youtube, href: '#', label: 'YouTube' },
-  { icon: Mail, href: '#', label: 'Email' },
-]
+// Icons per platform key accepted by the API (social.validator.js). Unknown platforms fall back to a globe.
+const platformIcons = {
+  facebook: [Facebook, 'Facebook'], instagram: [Instagram, 'Instagram'], x: [Twitter, 'X'], linkedin: [Linkedin, 'LinkedIn'],
+  youtube: [Youtube, 'YouTube'], github: [Github, 'GitHub'], telegram: [Send, 'Telegram'], whatsapp: [MessageCircle, 'WhatsApp'],
+  discord: [MessageCircle, 'Discord'], tiktok: [Globe, 'TikTok'], snapchat: [Globe, 'Snapchat'], threads: [Globe, 'Threads'],
+}
 
 export default function Footer() {
+  const settings = useSettings()
+  const social = (usePublic('/social').data ?? []).map((l) => {
+    const [Icon, label] = platformIcons[l.platform] ?? [Globe, l.platform]
+    return { id: l.id, href: l.url, Icon, label }
+  })
   return (
     <footer className="bg-jl-darker/70 border-none border-jl-card-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -51,6 +55,9 @@ export default function Footer() {
               <h3 className="font-heading font-bold text-sm tracking-widest uppercase text-jl-pink mb-4">
                 {section.title}
               </h3>
+              {section.items && section.title === 'JINNAH LEAGUE' && settings.footer_text && (
+                <p className="mb-2 text-sm text-gray-400">{settings.footer_text}</p>
+              )}
               {section.items && (
                 <ul className="space-y-2">
                   {section.items.map((item) => (
@@ -83,16 +90,25 @@ export default function Footer() {
               CONNECT WITH US
             </h3>
             <div className="flex flex-wrap gap-3">
-              {socialLinks.map((social) => (
+              {social.map(({ id, href, Icon, label }) => (
                 <a
-                  key={social.label}
-                  href={social.href}
-                  aria-label={social.label}
+                  key={id}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
                   className="w-9 h-9 rounded bg-jl-card border border-jl-card-border flex items-center justify-center text-gray-400 hover:text-white hover:border-jl-purple transition-all duration-200"
                 >
-                  <social.icon size={16} />
+                  <Icon size={16} />
                 </a>
               ))}
+              <Link
+                to="/contact"
+                aria-label="Contact us"
+                className="w-9 h-9 rounded bg-jl-card border border-jl-card-border flex items-center justify-center text-gray-400 hover:text-white hover:border-jl-purple transition-all duration-200"
+              >
+                <Mail size={16} />
+              </Link>
             </div>
             <div className="mt-4">
               <div className="w-10 h-10 rounded bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center font-display text-white text-sm">
@@ -106,11 +122,10 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-jl-card-border pb-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-500">
-          <p>© 2026 JINNAH LEAGUE. ALL RIGHTS RESERVED.</p>
+          <p>{settings.copyright_text || '© 2026 JINNAH LEAGUE. ALL RIGHTS RESERVED.'}</p>
           <div className="flex gap-4">
-            <Link to="#" className="hover:text-gray-300 transition-colors">TERMS OF SERVICE</Link>
-            <Link to="#" className="hover:text-gray-300 transition-colors">PRIVACY POLICY</Link>
-            <Link to="#" className="hover:text-gray-300 transition-colors">JINNAH LEAGUE</Link>
+            <Link to="/terms" className="hover:text-gray-300 transition-colors">TERMS OF SERVICE</Link>
+            <Link to="/privacy" className="hover:text-gray-300 transition-colors">PRIVACY POLICY</Link>
           </div>
         </div>
       </div>

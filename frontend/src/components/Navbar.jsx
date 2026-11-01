@@ -65,26 +65,26 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 pt-1.5 h-20 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? 'bg-jl-darker/30 backdrop-blur-md shadow-lg shadow-black/30'
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-2">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center font-display text-white text-sm">
-              JL
+          <Link to="/" className="flex items-center gap-1 group ">
+            <div>
+              <img className='w-16 h-14' src="./public/logo.png" alt="logo" />
             </div>
-            <span className="font-display text-lg text-white tracking-wide">
+            <span className="font-display text-3xl text-white tracking-wide">
               JINNAH LEAGUE
             </span>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden lg:flex mt-1 items-center gap-1">
             {navLinks.map((link) =>
               link.hasDropdown ? (
                 <div key={link.label} className="relative" ref={dropdownRef}>
@@ -92,7 +92,7 @@ export default function Navbar() {
                     onClick={() => setAboutOpen(!aboutOpen)}
                     aria-haspopup="menu"
                     aria-expanded={aboutOpen}
-                    className={`flex items-center gap-1 px-3 py-2 text-xs font-heading font-semibold tracking-widest uppercase transition-colors duration-200 ${
+                    className={`flex items-center gap-1 px-3 py-2 text-sm font-heading font-semibold tracking-widest uppercase transition-colors duration-200 ${
                       location.pathname === '/about'
                         ? 'text-pink-500'
                         : 'text-gray-300 hover:text-jl-purple'
@@ -100,7 +100,7 @@ export default function Navbar() {
                   >
                     {link.label}
                     <ChevronDown
-                      size={12}
+                      size={14}
                       className={`transition-transform duration-200 ${
                         aboutOpen ? 'rotate-180' : ''
                       }`}
@@ -119,7 +119,7 @@ export default function Navbar() {
                           <Link
                             key={item.label}
                             to={item.to}
-                            className="block px-4 py-2.5 text-xs font-heading font-semibold tracking-widest uppercase text-gray-300 hover:text-white hover:bg-white/5 transition-colors duration-150"
+                            className="block px-4 py-2.5 text-sm font-heading font-semibold tracking-widest uppercase text-gray-300 hover:text-jl-purple transition-colors duration-150"
                           >
                             {item.label}
                           </Link>
@@ -132,7 +132,7 @@ export default function Navbar() {
                 <Link
                   key={link.label}
                   to={link.to}
-                  className={`px-3 py-2 text-xs font-heading font-semibold tracking-widest uppercase transition-colors duration-200 ${
+                  className={`px-3 py-2 text-sm font-heading font-semibold tracking-widest uppercase transition-colors duration-200 ${
                     location.pathname === link.to
                       ? 'text-pink-500'
                       : 'text-gray-300 hover:text-jl-purple'

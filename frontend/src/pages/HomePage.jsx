@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Users, TrendingUp, Zap, Calendar } from 'lucide-react'
-import HeroSection from '../components/HeroSection'
 import SectionHeading from '../components/SectionHeading'
 import SectionDivider from '../components/SectionDivider'
+import HeroSlider from '../components/HeroSlider'
+import CmsSections from '../components/CmsSections'
+import { usePage, usePublic, fileUrl } from '../lib/publicApi'
 
 const evolutionCards = [
   {
@@ -52,24 +54,12 @@ const itemVariants = {
 }
 
 export default function HomePage() {
+  const { sections } = usePage('home')
+  const logos = (usePublic('/sponsors').data ?? []).filter((t) => t.logoMedia)
   return (
     <>
-      {/* Hero */}
-      <HeroSection
-        title="JINNAH LEAGUE"
-        subtitle="BIGGER. BOLDER. BETTER."
-        description="NATIONAL INTER-UNIVERSITY TECH & GAMING FESTIVAL • ACM MAJU STUDENT CHAPTER"
-        primaryBtn={
-          <Link to="/jl26" className="btn-primary">
-            EXPLORE JL'26
-          </Link>
-        }
-        secondaryBtn={
-          <Link to="/sponsors" className="btn-outline">
-            PARTNER WITH US
-          </Link>
-        }
-      />
+      {/* Hero (CMS slides, built-in fallback) */}
+      <HeroSlider />
 
       {/* About Section */}
       <section className="py-20">
@@ -196,6 +186,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <CmsSections sections={sections} leadingDivider />
+
       <SectionDivider />
 
       {/* Partners Section */}
@@ -209,17 +201,17 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="mt-10 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4"
           >
-            {Array.from({ length: 6 }).map((_, i) => (
-              <motion.div
-                key={i}
-                variants={itemVariants}
-                className="aspect-square bg-jl-card border border-jl-card-border rounded-lg flex items-center justify-center hover:border-jl-purple/40 transition-colors duration-300"
-              >
-                <span className="text-gray-600 text-xs font-heading tracking-wider">
-                  Partner {i + 1}
-                </span>
-              </motion.div>
-            ))}
+            {logos.length > 0
+              ? logos.map((t) => (
+                  <motion.div key={t.id} variants={itemVariants} className="flex aspect-square items-center justify-center rounded-lg border border-jl-card-border bg-jl-card p-3 transition-colors duration-300 hover:border-jl-purple/40">
+                    <img src={fileUrl(t.logoMedia)} alt={t.logoMedia.altText || t.name} loading="lazy" className="max-h-full max-w-full object-contain" />
+                  </motion.div>
+                ))
+              : Array.from({ length: 6 }).map((_, i) => (
+                  <motion.div key={i} variants={itemVariants} className="aspect-square bg-jl-card border border-jl-card-border rounded-lg flex items-center justify-center hover:border-jl-purple/40 transition-colors duration-300">
+                    <span className="text-gray-600 text-xs font-heading tracking-wider">Partner {i + 1}</span>
+                  </motion.div>
+                ))}
           </motion.div>
         </div>
       </section>

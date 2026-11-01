@@ -4,6 +4,8 @@ import { Code, Gamepad2, Cpu, Trophy, Palette, Shield, Mic, BrainCircuit } from 
 import HeroSection from '../components/HeroSection'
 import SectionHeading from '../components/SectionHeading'
 import SectionDivider from '../components/SectionDivider'
+import CmsSections from '../components/CmsSections'
+import { usePage } from '../lib/publicApi'
 
 const competitions = [
   { icon: Code, title: 'COMPETITIVE PROGRAMMING', desc: 'Algorithmic battles to find the sharpest coders across Pakistan.' },
@@ -27,6 +29,8 @@ const itemVariants = {
 }
 
 export default function JL26Page() {
+  // Competitions & Events are managed in the CMS (JL'26 module); the built-in list is the fallback.
+  const { sections } = usePage('jl26')
   return (
     <>
       <HeroSection
@@ -37,46 +41,55 @@ export default function JL26Page() {
         secondaryBtn={<Link to="/sponsors" className="btn-outline">SPONSOR JL'26</Link>}
       />
 
-      {/* About JL'26 */}
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <SectionHeading subtitle="JL'26 brings together the best of tech and gaming under one roof. With expanded competitions, industry partnerships, and a national reach, this edition promises an unforgettable experience for every participant.">WHAT AWAITS YOU</SectionHeading>
-        </div>
-      </section>
+      {sections.length > 0 ? (
+        <>
+          <CmsSections sections={sections} />
+          <SectionDivider />
+        </>
+      ) : (
+        <>
+        {/* About JL'26 */}
+        <section className="py-20">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <SectionHeading subtitle="JL'26 brings together the best of tech and gaming under one roof. With expanded competitions, industry partnerships, and a national reach, this edition promises an unforgettable experience for every participant.">WHAT AWAITS YOU</SectionHeading>
+          </div>
+        </section>
 
-      <SectionDivider />
+        <SectionDivider />
 
-      {/* Competitions */}
-      <section className="py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading>COMPETITIONS & EVENTS</SectionHeading>
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
-          >
-            {competitions.map((comp) => (
-              <motion.div
-                key={comp.title}
-                variants={itemVariants}
-                className="bg-jl-card border border-jl-card-border rounded-lg p-6 text-center hover:border-jl-purple/40 hover:-translate-y-1 transition-all duration-300 group"
-              >
-                <div className="flex justify-center mb-4">
-                  <comp.icon size={32} className="text-jl-purple group-hover:text-jl-pink transition-colors duration-300" strokeWidth={1.5} />
-                </div>
-                <h3 className="font-heading font-bold text-xs tracking-widest uppercase text-white mb-2">
-                  {comp.title}
-                </h3>
-                <p className="text-gray-400 text-xs leading-relaxed">{comp.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+        {/* Competitions */}
+        <section className="py-20">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionHeading>COMPETITIONS & EVENTS</SectionHeading>
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
+            >
+              {competitions.map((comp) => (
+                <motion.div
+                  key={comp.title}
+                  variants={itemVariants}
+                  className="bg-jl-card border border-jl-card-border rounded-lg p-6 text-center hover:border-jl-purple/40 hover:-translate-y-1 transition-all duration-300 group"
+                >
+                  <div className="flex justify-center mb-4">
+                    <comp.icon size={32} className="text-jl-purple group-hover:text-jl-pink transition-colors duration-300" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="font-heading font-bold text-xs tracking-widest uppercase text-white mb-2">
+                    {comp.title}
+                  </h3>
+                  <p className="text-gray-400 text-xs leading-relaxed">{comp.desc}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
 
-      <SectionDivider />
+        <SectionDivider />
+        </>
+      )}
 
       {/* CTA */}
       <section className="py-20">

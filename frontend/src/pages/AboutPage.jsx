@@ -4,6 +4,8 @@ import { Eye, Target, Compass, Award, Users } from 'lucide-react'
 import HeroSection from '../components/HeroSection'
 import SectionHeading from '../components/SectionHeading'
 import SectionDivider from '../components/SectionDivider'
+import CmsSections from '../components/CmsSections'
+import { usePage } from '../lib/publicApi'
 
 const whyItems = [
   {
@@ -34,6 +36,7 @@ const itemVariants = {
 }
 
 export default function AboutPage() {
+  const { sections } = usePage('about')
   return (
     <>
       {/* Hero */}
@@ -191,6 +194,8 @@ export default function AboutPage() {
           </motion.div>
         </div>
       </section>
+
+      <CmsSections sections={sections} leadingDivider />
 
       <SectionDivider />
 

@@ -4,6 +4,8 @@ import { Trophy, Users, MapPin, Calendar, Star, Gamepad2, Code, Cpu } from 'luci
 import HeroSection from '../components/HeroSection'
 import SectionHeading from '../components/SectionHeading'
 import SectionDivider from '../components/SectionDivider'
+import CmsSections from '../components/CmsSections'
+import { usePage } from '../lib/publicApi'
 
 const editions = [
   {
@@ -40,6 +42,9 @@ const itemVariants = {
 }
 
 export default function LegacyPage() {
+  // JL'24 — National Expansion is managed in the CMS (Legacy module). Until sections are published, the built-in text is shown.
+  const { sections } = usePage('legacy')
+  const shown = sections.length ? editions.filter((e) => e.year !== '2024') : editions
   return (
     <>
       <HeroSection
@@ -48,7 +53,7 @@ export default function LegacyPage() {
         description="FROM A VISION TO PAKISTAN'S PREMIER TECH & GAMING FESTIVAL"
       />
 
-      {editions.map((edition, idx) => (
+      {shown.map((edition, idx) => (
         <div key={edition.year}>
           <section className="py-20">
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -97,6 +102,13 @@ export default function LegacyPage() {
           <SectionDivider />
         </div>
       ))}
+
+      {sections.length > 0 && (
+        <>
+          <CmsSections sections={sections} />
+          <SectionDivider />
+        </>
+      )}
 
       {/* CTA */}
       <section className="py-20">

@@ -9,6 +9,7 @@ import ContactPage from './pages/ContactPage'
 import GalleryPage from './pages/GalleryPage'
 import MediaPage from './pages/MediaPage'
 import JL26Page from './pages/JL26Page'
+import DynamicPage from './pages/DynamicPage'
 
 // The CMS is code-split so visitors to the public site never download it.
 const CmsApp = lazy(() => import('./cms/CmsApp'))
@@ -27,6 +28,8 @@ export default function App() {
         <Route path="media" element={<MediaPage />} />
         <Route path="gallery" element={<GalleryPage />} />
         <Route path="contact" element={<ContactPage />} />
+        {/* Pages created in the CMS Pages module, e.g. /#/rules */}
+        <Route path=":slug" element={<DynamicPage />} />
       </Route>
       <Route
         path="admin/*"

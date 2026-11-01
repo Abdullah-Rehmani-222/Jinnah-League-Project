@@ -4,8 +4,10 @@ import { Handshake, Award, Star } from 'lucide-react'
 import HeroSection from '../components/HeroSection'
 import SectionHeading from '../components/SectionHeading'
 import SectionDivider from '../components/SectionDivider'
+import CmsSections from '../components/CmsSections'
+import { usePage, usePublic, fileUrl } from '../lib/publicApi'
 
-const tiers = [
+const defaultTiers = [
   { name: 'TITLE SPONSOR', color: 'from-yellow-400 to-amber-500', perks: ['Maximum brand visibility', 'Event naming rights', 'Exclusive media coverage', 'VIP access & speaking opportunity'] },
   { name: 'GOLD SPONSOR', color: 'from-yellow-300 to-yellow-500', perks: ['Major brand placement', 'Social media features', 'Booth at the event', 'Branded competition'] },
   { name: 'SILVER SPONSOR', color: 'from-gray-300 to-gray-400', perks: ['Logo on all materials', 'Social media mentions', 'Shared booth space', 'Attendee database access'] },
@@ -22,7 +24,22 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.45 } },
 }
 
+// Colours for tiers by name; tiers created in the CMS with other names get the neutral brand gradient.
+const tierColor = (name = '') => {
+  const n = name.toLowerCase()
+  if (n.includes('title')) return 'from-yellow-400 to-amber-500'
+  if (n.includes('gold')) return 'from-yellow-300 to-yellow-500'
+  if (n.includes('silver')) return 'from-gray-300 to-gray-400'
+  if (n.includes('bronze')) return 'from-orange-300 to-orange-500'
+  return 'from-purple-400 to-pink-400'
+}
+
 export default function SponsorsPage() {
+  const api = usePublic('/sponsors').data
+  const { sections } = usePage('sponsors')
+  const tiers = api?.length
+    ? api.map((t) => ({ id: t.id, name: t.name.toUpperCase(), description: t.description, color: tierColor(t.name), perks: t.benefits ?? [], logo: t.logoMedia }))
+    : defaultTiers
   return (
     <>
       <HeroSection
@@ -71,13 +88,15 @@ export default function SponsorsPage() {
           >
             {tiers.map((tier) => (
               <motion.div
-                key={tier.name}
+                key={tier.id ?? tier.name}
                 variants={itemVariants}
                 className="bg-jl-card border border-jl-card-border rounded-lg p-6 hover:border-jl-purple/40 transition-all duration-300"
               >
                 <div className={`inline-block px-3 py-1 rounded-full bg-gradient-to-r ${tier.color} mb-4`}>
                   <span className="text-xs font-heading font-bold tracking-widest text-jl-darker">{tier.name}</span>
                 </div>
+                {tier.logo && <img src={fileUrl(tier.logo)} alt={tier.logo.altText || `${tier.name} logo`} loading="lazy" className="mb-3 h-12 w-auto max-w-full object-contain" />}
+                {tier.description && <p className="mb-3 text-xs leading-relaxed text-gray-400">{tier.description}</p>}
                 <ul className="space-y-2 mt-2">
                   {tier.perks.map((perk) => (
                     <li key={perk} className="flex items-start gap-2 text-xs text-gray-300">
@@ -100,6 +119,8 @@ export default function SponsorsPage() {
           </motion.div>
         </div>
       </section>
+
+      <CmsSections sections={sections} leadingDivider />
     </>
   )
 }
