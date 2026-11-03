@@ -9,7 +9,7 @@ const defaultInfo = [
   { icon: Mail, label: 'Email', value: 'contact@jinnahleague.com' },
   { icon: MapPin, label: 'Visit', value: 'Mohammad Ali Jinnah University, Karachi' },
   { icon: Phone, label: 'Phone', value: '+92 XXX XXXXXXX' },
-  { icon: Clock, label: 'Response Time', value: 'Within 24-48 hours' },
+  { icon: Clock, label: 'Response Time', value: 'Within 12-24 hours' },
 ]
 
 export default function ContactPage() {
@@ -61,7 +61,7 @@ export default function ContactPage() {
 
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-2 gap-20">
             {/* Contact Info */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -69,20 +69,20 @@ export default function ContactPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="font-display text-2xl gradient-text-pink mb-6">REACH OUT</h2>
-              <p className="text-gray-300 text-sm leading-relaxed mb-8">
+              <h2 className="font-display text-3xl gradient-text-pink mb-6">REACH OUT</h2>
+              <p className="text-gray-300 text-md leading-relaxed mb-8">
                 Whether you want to register, sponsor, partner, or just ask a question — our team
                 is here to help. Reach out and we&apos;ll get back to you as soon as possible.
               </p>
               <div className="space-y-5">
                 {info.map((info) => (
                   <div key={info.label} className="flex items-start gap-4 group">
-                    <div className="w-10 h-10 rounded bg-jl-card border border-jl-card-border flex items-center justify-center flex-shrink-0 group-hover:border-jl-purple/50 transition-colors">
+                    <div className="w-11 h-11 rounded bg-jl-card border border-jl-card-border flex items-center justify-center flex-shrink-0 group-hover:border-jl-purple/50 transition-colors">
                       <info.icon size={18} className="text-jl-purple" />
                     </div>
                     <div>
                       <p className="font-heading text-xs tracking-widest uppercase text-gray-400">{info.label}</p>
-                      <p className="text-sm text-white mt-0.5">{info.value}</p>
+                      <p className="text-md text-white mt-0.5">{info.value}</p>
                     </div>
                   </div>
                 ))}
@@ -96,8 +96,8 @@ export default function ContactPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <div className="relative bg-jl-card border border-jl-card-border rounded-lg p-6 md:p-8">
-                <h3 className="font-display text-xl gradient-text-pink mb-6">SEND A MESSAGE</h3>
+              <div className="relative bg-jl-darker/70 border-none rounded-lg p-6 md:p-8">
+                <h3 className="font-display text-2xl gradient-text-pink mb-6">SEND A MESSAGE</h3>
                 {status === 'sent' ? (
                   <div className="text-center py-12">
                     <Send size={40} className="text-jl-pink mx-auto mb-4" />
@@ -127,7 +127,7 @@ export default function ContactPage() {
                         onChange={set('name')} minLength={2} maxLength={100}
                         aria-invalid={Boolean(errors.name)}
                         aria-describedby={errors.name ? 'name-error' : undefined}
-                        className="w-full bg-jl-darker border border-jl-card-border rounded px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-jl-purple transition-colors"
+                        className="w-full bg-jl-darker border border-jl-card-border rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-jl-purple transition-colors"
                         placeholder="Your name"
                       />
                       {errors.name && <p id="name-error" role="alert" className="mt-1 text-xs text-red-400">{errors.name}</p>}
@@ -142,7 +142,7 @@ export default function ContactPage() {
                         onChange={set('email')} maxLength={255}
                         aria-invalid={Boolean(errors.email)}
                         aria-describedby={errors.email ? 'email-error' : undefined}
-                        className="w-full bg-jl-darker border border-jl-card-border rounded px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-jl-purple transition-colors"
+                        className="w-full bg-jl-darker border border-jl-card-border rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-jl-purple transition-colors"
                         placeholder="your@email.com"
                       />
                       {errors.email && <p id="email-error" role="alert" className="mt-1 text-xs text-red-400">{errors.email}</p>}
@@ -157,7 +157,7 @@ export default function ContactPage() {
                         onChange={set('subject')} maxLength={200}
                         aria-invalid={Boolean(errors.subject)}
                         aria-describedby={errors.subject ? 'subject-error' : undefined}
-                        className="w-full bg-jl-darker border border-jl-card-border rounded px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-jl-purple transition-colors"
+                        className="w-full bg-jl-darker border border-jl-card-border rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-jl-purple transition-colors"
                         placeholder="What's this about?"
                       />
                       {errors.subject && <p id="subject-error" role="alert" className="mt-1 text-xs text-red-400">{errors.subject}</p>}
@@ -172,7 +172,7 @@ export default function ContactPage() {
                         onChange={set('message')} minLength={10} maxLength={5000}
                         aria-invalid={Boolean(errors.message)}
                         aria-describedby={errors.message ? 'message-error' : undefined}
-                        className="w-full bg-jl-darker border border-jl-card-border rounded px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-jl-purple transition-colors resize-none"
+                        className="w-full bg-jl-darker border border-jl-card-border rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-jl-purple transition-colors resize-none"
                         placeholder="Your message..."
                       />
                       {errors.message && <p id="message-error" role="alert" className="mt-1 text-xs text-red-400">{errors.message}</p>}
