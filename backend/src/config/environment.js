@@ -68,3 +68,26 @@ export const env = {
   // SameSite=None requires Secure; browsers reject the cookie otherwise.
   cookieSecure: isProduction || v.COOKIE_SAME_SITE === 'none',
 }
+
+// ---- Production sanity checks (warnings only: they explain the most common deployment mistakes) ----------
+const SHARED_SUFFIXES = ['github.io', 'onrender.com', 'vercel.app', 'netlify.app', 'railway.app', 'fly.dev', 'pages.dev', 'herokuapp.com']
+const siteOf = (host) => {
+  const parts = host.split('.')
+  const shared = SHARED_SUFFIXES.find((s) => host === s || host.endsWith(`.${s}`))
+  return parts.slice(-((shared ? shared.split('.').length : 2) + (shared ? 1 : 0))).join('.')
+}
+
+if (isProduction) {
+  const warn = (m) => console.warn(`[config] WARNING: ${m}`)
+  const origins = env.allowedOrigins.filter((o) => !/localhost|127\.0\.0\.1/.test(o))
+  if (!origins.length) warn('FRONTEND_URL has no public origin - the deployed website will be blocked by CORS.')
+  if (env.STORAGE_DRIVER === 'local') warn('STORAGE_DRIVER=local: uploaded files live on this server\'s disk and are lost on redeploy. Use STORAGE_DRIVER=s3.')
+  if (v.API_PUBLIC_URL && v.COOKIE_SAME_SITE !== 'none') {
+    const apiSite = siteOf(new URL(env.apiPublicUrl).hostname)
+    const cross = origins.filter((o) => { try { return siteOf(new URL(o).hostname) !== apiSite } catch { return false } })
+    if (cross.length)
+      warn(`the website (${cross.join(', ')}) and this API are on different sites, but COOKIE_SAME_SITE=${v.COOKIE_SAME_SITE}. ` +
+        'Browsers will not send the login cookie, so CMS login will bounce back to /admin/login. ' +
+        'Use a shared domain (www.x.com + api.x.com with lax) or COOKIE_SAME_SITE=none (Chrome/Edge only).')
+  }
+}

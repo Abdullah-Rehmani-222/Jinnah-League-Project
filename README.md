@@ -46,6 +46,23 @@ API reference, auth flow and deployment checklist: [docs/API.md](docs/API.md)
 Database design, ERD and migration commands: [docs/DATABASE.md](docs/DATABASE.md)
 
 
+## Production deployment checklist
+
+1. **Database (Neon):** from `backend/`, with `.env` filled in: `npx prisma migrate deploy`, then `npm run seed`.
+2. **API (Render / Railway / Fly.io):** `render.yaml` is a ready blueprint. Root directory `backend`, build `npm ci && npm run build`,
+   start `npm start`, Node >= 22.18. Environment variables: see `backend/.env.example`.
+   Required: `NODE_ENV=production`, `DATABASE_URL`, `DIRECT_URL`, `SESSION_SECRET`, `FRONTEND_URL`, `API_PUBLIC_URL`,
+   `COOKIE_SAME_SITE`, and `STORAGE_DRIVER=s3` with the `S3_*` variables (local disk is wiped on every redeploy).
+   The API prints `[config] WARNING` lines at start-up when it detects the usual mistakes.
+3. **Cookies:** the CMS login is a cookie. Website and API on one site (`www.x.com` + `api.x.com`, `COOKIE_SAME_SITE=lax`,
+   `COOKIE_DOMAIN=.x.com`) works in every browser. github.io + onrender.com is cross-site: `COOKIE_SAME_SITE=none` works in
+   Chrome/Edge only; Safari and Firefox block it.
+4. **Website (GitHub Pages):** create `frontend/.env.production` containing `VITE_API_URL=https://<your-api>/api`, then
+   `npm run deploy`. The build now fails if the API URL is missing or points to localhost.
+   `npm run build:local` builds a local preview instead.
+5. Open the live site, DevTools > Network: requests must go to your API host, and `/api/auth/login` must set the `jl_sid` cookie.
+6. Never commit `.env` files. Rotate any credential that has been shared (Neon password, `SESSION_SECRET`).
+
 ## Running everything together (frontend + API + database)
 
 ```bash

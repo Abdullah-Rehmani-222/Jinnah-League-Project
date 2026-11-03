@@ -76,7 +76,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-1 group ">
             <div>
-              <img className='w-16 h-14' src="./public/logo.png" alt="logo" />
+              <img className='w-16 h-14' src={`${import.meta.env.BASE_URL}logo.png`} alt="logo" />
             </div>
             <span className="font-display text-3xl text-white tracking-wide">
               JINNAH LEAGUE

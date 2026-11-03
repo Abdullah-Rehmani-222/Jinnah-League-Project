@@ -18,6 +18,10 @@ export async function setup(overrides = {}) {
     DATABASE_URL: url,
     SESSION_SECRET: 'test-session-secret-test-session-secret-0123456789',
     FRONTEND_URL: 'http://localhost:5173',
+    // Hermetic: a developer's backend/.env (dotenv) must never change what the tests assert.
+    COOKIE_SAME_SITE: 'lax',
+    COOKIE_DOMAIN: '',
+    S3_BUCKET: '',
     STORAGE_DRIVER: 'local',
     UPLOAD_DIR: uploadDir,
     API_RATE_LIMIT_MAX: '100000',

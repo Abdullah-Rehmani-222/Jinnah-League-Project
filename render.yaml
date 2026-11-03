@@ -1,0 +1,20 @@
+# Render blueprint for the API. Secrets are entered in the dashboard (sync: false), never committed.
+services:
+  - type: web
+    name: jinnah-league-api
+    runtime: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - { key: NODE_VERSION, value: 22.18.0 }
+      - { key: NODE_ENV, value: production }
+      - { key: DATABASE_URL, sync: false }
+      - { key: DIRECT_URL, sync: false }
+      - { key: SESSION_SECRET, sync: false }
+      - { key: FRONTEND_URL, value: https://abdullah-rehmani-222.github.io }
+      - { key: API_PUBLIC_URL, sync: false }
+      - { key: COOKIE_SAME_SITE, value: none }
+      - { key: STORAGE_DRIVER, value: s3 }
