@@ -9,6 +9,22 @@ import { MediaField } from '../ui/MediaPicker'
 import Button, { IconButton } from '../ui/Button'
 import ContentModule from './ContentModule'
 
+const baseProps = (size, color) => ({
+  xmlns: "http://w3.org",
+  width: size,
+  height: size,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: color,
+  strokeWidth: "2",
+  strokeLinecap: "round",
+  strokeLinejoin: "round"
+});
+
+export const Tiktok = ({ size = 24, color = "currentColor", ...p }) => (
+  <svg {...baseProps(size, color)} {...p}><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" /></svg>
+);
+
 const asset = (a) => (a ? { id: a.id, fileUrl: assetUrl(a), mimeType: a.mimeType, originalName: a.originalName, altText: a.altText } : null)
 
 function Thumb({ asset: a, icon: Icon = FileText }) {
@@ -200,7 +216,7 @@ export const PressManager = () => <ContentModule config={pressConfig} />
 /* ------------------------------------------------------------------ Social Networks */
 const platforms = [
   ['facebook', 'Facebook', Facebook], ['instagram', 'Instagram', Instagram], ['x', 'X (Twitter)', Twitter],
-  ['youtube', 'YouTube', Youtube], ['linkedin', 'LinkedIn', Linkedin], ['tiktok', 'TikTok', Globe],
+  ['youtube', 'YouTube', Youtube], ['linkedin', 'LinkedIn', Linkedin], ['tiktok', 'TikTok', Tiktok],
   ['whatsapp', 'WhatsApp', MessageCircle], ['snapchat', 'Snapchat', Globe], ['telegram', 'Telegram', Send],
   ['discord', 'Discord', MessageCircle], ['threads', 'Threads', Globe], ['github', 'GitHub', Github],
 ]

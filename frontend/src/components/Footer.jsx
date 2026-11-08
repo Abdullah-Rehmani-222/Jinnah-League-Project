@@ -33,12 +33,30 @@ const footerSections = [
   },
 ]
 
+const baseProps = (size, color) => ({
+  xmlns: "http://w3.org",
+  width: size,
+  height: size,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: color,
+  strokeWidth: "2",
+  strokeLinecap: "round",
+  strokeLinejoin: "round"
+});
+
+const Tiktok = ({ size = 24, color = "currentColor", ...p }) => (
+  <svg {...baseProps(size, color)} {...p}><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" /></svg>
+);
+
+
 // Icons per platform key accepted by the API (social.validator.js). Unknown platforms fall back to a globe.
 const platformIcons = {
   facebook: [Facebook, 'Facebook'], instagram: [Instagram, 'Instagram'], x: [Twitter, 'X'], linkedin: [Linkedin, 'LinkedIn'],
   youtube: [Youtube, 'YouTube'], github: [Github, 'GitHub'], telegram: [Send, 'Telegram'], whatsapp: [MessageCircle, 'WhatsApp'],
-  discord: [MessageCircle, 'Discord'], tiktok: [Globe, 'TikTok'], snapchat: [Globe, 'Snapchat'], threads: [Globe, 'Threads'],
+  discord: [MessageCircle, 'Discord'], tiktok: [Tiktok, 'TikTok'], snapchat: [Globe, 'Snapchat'], threads: [Globe, 'Threads'],
 }
+
 
 export default function Footer() {
   const settings = useSettings()
@@ -111,14 +129,14 @@ export default function Footer() {
               </Link>
             </div>
             <div className="mt-4">
-              <div className="w-10 h-10 rounded bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center font-display text-white text-sm">
-                JL
+              <div >
+                <img className='w-13 h-14 lg:w-15 lg:h-16 ml-[-12px] lg:ml-[-15px]' src={`${import.meta.env.BASE_URL}logo.png`} alt="logo" />
               </div>
             </div>
           </div>
         </div>
       </div>
-   <hr className='border-t border-white/10 max-w-7xl mx-auto'/>
+      <hr className='border-t border-white/10 max-w-7xl mx-auto' />
       {/* Bottom bar */}
       <div className="border-jl-card-border pb-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-500">

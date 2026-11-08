@@ -44,8 +44,10 @@ function Sidebar({ unread, onNavigate }) {
   const { user, logout } = useAuth()
   return (
     <div className="flex h-full flex-col bg-cms-side">
-      <div className="flex h-16 shrink-0 items-center gap-3 border-b border-cms-border px-5">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cms-accent font-display text-sm text-white">JL</div>
+      <div className="flex h-16 shrink-0 items-center gap-0.5 border-b border-cms-border px-5">
+        <div>
+          <img className='h-9 w-10 lg:h-11 lg:w-12' src={`${import.meta.env.BASE_URL}logo.png`} alt="logo" />
+        </div>
         <div className="leading-tight">
           <p className="text-sm font-semibold text-cms-text">Jinnah League</p>
           <p className="text-xs text-cms-faint">Content manager</p>
@@ -118,7 +120,7 @@ export default function CmsLayout() {
 
   return (
     <div className="min-h-screen bg-cms-bg text-cms-text">
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 border-r border-cms-border lg:block">
+      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 border-r border-cms-bg lg:block">
         <Sidebar unread={unread} />
       </aside>
 

@@ -12,25 +12,25 @@ const evolutionCards = [
     year: "JL'22",
     title: 'THE BEGINNING',
     desc: 'Where it all started — our inaugural event that laid the foundation.',
-    color: 'from-pink-500 to-rose-600',
+    // color: 'from-pink-500 to-rose-600',
   },
   {
     year: "JL'23",
     title: 'FOUNDATION',
     desc: 'Building on success with expanded competitions and partnerships.',
-    color: 'from-purple-500 to-violet-600',
+    // color: 'from-purple-500 to-violet-600',
   },
   {
     year: "JL'24",
     title: 'EXPANSION',
     desc: 'Growing nationally with inter-university collaborations across Pakistan.',
-    color: 'from-fuchsia-500 to-purple-600',
+    // color: 'from-fuchsia-500 to-purple-600',
   },
   {
     year: "JL'26",
     title: 'THE LEGACY CONTINUES',
     desc: 'Bigger. Bolder. Better. The most ambitious edition yet.',
-    color: 'from-pink-500 to-purple-600',
+    // color: 'from-pink-500 to-purple-600',
   },
 ]
 
@@ -99,8 +99,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <SectionDivider />
-
       {/* Evolution Section */}
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -118,14 +116,10 @@ export default function HomePage() {
                 variants={itemVariants}
                 className="bg-jl-card border border-jl-card-border rounded-lg p-6 text-center hover:border-jl-purple/40 transition-all duration-300 group"
               >
-                <div
-                  className={`inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br ${card.color} mb-4 group-hover:scale-110 transition-transform duration-300`}
-                >
-                  <span className="font-heading font-bold text-white text-xs tracking-wider">
-                    {card.year}
-                  </span>
-                </div>
-                <h3 className="font-heading font-bold text-sm tracking-widest uppercase text-white mb-2">
+                <span className="font-display font-bold text-jl-purple text-2xl">
+                  {card.year}
+                </span>
+                <h3 className="font-heading font-bold text-sm tracking-widest uppercase text-white mt-1 mb-2">
                   {card.title}
                 </h3>
                 <p className="text-gray-400 text-xs leading-relaxed">
@@ -148,8 +142,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <SectionDivider />
-
       {/* Impact Section */}
       <section className="py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -169,12 +161,12 @@ export default function HomePage() {
               >
                 <div className="flex justify-center mb-3">
                   <stat.icon
-                    size={36}
+                    size={40}
                     className="text-jl-purple group-hover:text-jl-pink transition-colors duration-300"
                     strokeWidth={1.5}
                   />
                 </div>
-                <p className="font-heading font-bold text-2xl md:text-3xl text-white">
+                <p className="font-heading font-semibold text-2xl md:text-3xl text-white">
                   {stat.value}
                 </p>
                 <p className="font-heading text-xs tracking-widest uppercase text-gray-400 mt-1">
@@ -187,8 +179,6 @@ export default function HomePage() {
       </section>
 
       <CmsSections sections={sections} leadingDivider />
-
-      <SectionDivider />
 
       {/* Partners Section */}
       <section className="py-20">
@@ -203,20 +193,18 @@ export default function HomePage() {
           >
             {logos.length > 0
               ? logos.map((t) => (
-                  <motion.div key={t.id} variants={itemVariants} className="flex aspect-square items-center justify-center rounded-lg border border-jl-card-border bg-jl-card p-3 transition-colors duration-300 hover:border-jl-purple/40">
-                    <img src={fileUrl(t.logoMedia)} alt={t.logoMedia.altText || t.name} loading="lazy" className="max-h-full max-w-full object-contain" />
-                  </motion.div>
-                ))
+                <motion.div key={t.id} variants={itemVariants} className="flex aspect-square items-center justify-center rounded-lg border border-jl-card-border bg-jl-card p-3 transition-colors duration-300 hover:border-jl-purple/40">
+                  <img src={fileUrl(t.logoMedia)} alt={t.logoMedia.altText || t.name} loading="lazy" className="max-h-full max-w-full object-contain" />
+                </motion.div>
+              ))
               : Array.from({ length: 6 }).map((_, i) => (
-                  <motion.div key={i} variants={itemVariants} className="aspect-square bg-jl-card border border-jl-card-border rounded-lg flex items-center justify-center hover:border-jl-purple/40 transition-colors duration-300">
-                    <span className="text-gray-600 text-xs font-heading tracking-wider">Partner {i + 1}</span>
-                  </motion.div>
-                ))}
+                <motion.div key={i} variants={itemVariants} className="aspect-video bg-jl-card border border-jl-card-border rounded-lg flex items-center justify-center hover:border-jl-purple/40 transition-colors duration-300">
+                  <span className="text-gray-600 text-xs font-heading tracking-wider">Partner {i + 1}</span>
+                </motion.div>
+              ))}
           </motion.div>
         </div>
       </section>
-
-      <SectionDivider />
 
       {/* CTA Section */}
       <section className="py-20">
