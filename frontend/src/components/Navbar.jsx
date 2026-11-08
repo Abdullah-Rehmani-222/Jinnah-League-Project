@@ -3,14 +3,15 @@ import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, ChevronDown } from 'lucide-react'
 
+// Each item is a real sub-page of About (first one is /about itself).
 const aboutDropdownItems = [
   { label: 'JINNAH LEAGUE', to: '/about' },
-  { label: 'ACM MAJU', to: '/about#acm-maju' },
-  { label: 'MAJU', to: '/about#maju' },
-  { label: 'TENURES', to: '/about#tenures' },
-  { label: 'PREVIOUS SPONSORS', to: '/about#prev-sponsors' },
-  { label: 'PREVIOUS PARTNERS', to: '/about#prev-partners' },
-  { label: 'PREVIOUS SPEAKERS', to: '/about#prev-speakers' },
+  { label: 'ACM MAJU', to: '/about/acm-maju' },
+  { label: 'MAJU', to: '/about/maju' },
+  { label: 'TENURES', to: '/about/tenures' },
+  { label: 'PREVIOUS SPONSORS', to: '/about/previous-sponsors' },
+  { label: 'PREVIOUS PARTNERS', to: '/about/previous-partners' },
+  { label: 'PREVIOUS SPEAKERS', to: '/about/previous-speakers' },
 ]
 
 const navLinks = [
@@ -30,6 +31,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const dropdownRef = useRef(null)
   const location = useLocation()
+  const inAbout = location.pathname === '/about' || location.pathname.startsWith('/about/')
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -111,9 +113,7 @@ export default function Navbar() {
                     onClick={() => setAboutOpen(!aboutOpen)}
                     aria-haspopup="menu"
                     aria-expanded={aboutOpen}
-                    className={`flex items-center gap-1 px-3 py-2 text-sm font-heading font-semibold tracking-widest uppercase transition-colors duration-200 ${location.pathname === '/about'
-                      ? 'text-pink-500'
-                      : 'text-gray-300 hover:text-jl-purple'
+                    className={`flex items-center gap-1 px-3 py-2 text-sm font-heading font-semibold tracking-widest uppercase transition-colors duration-200 ${inAbout ? 'text-pink-500' : 'text-gray-300 hover:text-jl-purple'
                       }`}
                   >
                     {link.label}
@@ -136,7 +136,9 @@ export default function Navbar() {
                           <Link
                             key={item.label}
                             to={item.to}
-                            className="block px-4 py-2.5 text-sm font-heading font-semibold tracking-widest uppercase text-gray-300 hover:text-jl-purple transition-colors duration-150"
+                            className={`block px-4 py-2.5 text-sm font-heading font-semibold tracking-widest uppercase text-gray-300 hover:text-jl-purple transition-colors duration-150 ${
+                              location.pathname === item.to ? 'text-pink-500' : 'text-gray-300'
+                            }`}
                           >
                             {item.label}
                           </Link>
@@ -178,7 +180,7 @@ export default function Navbar() {
         </div>
       </div>
 
-           {/* Mobile Menu */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileOpen && (
           <>
@@ -244,8 +246,8 @@ export default function Navbar() {
                       key={link.label}
                       to={link.to}
                       className={`block px-3 py-3 text-md font-heading font-semibold tracking-widest uppercase transition-colors ${location.pathname === link.to
-                          ? 'text-jl-pink'
-                          : 'text-gray-300 hover:text-white'
+                        ? 'text-jl-pink'
+                        : 'text-gray-300 hover:text-white'
                         }`}
                     >
                       {link.label}
