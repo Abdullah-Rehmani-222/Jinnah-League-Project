@@ -14,9 +14,10 @@ export const press = ({ itemType }) =>
   prisma.pressItem.findMany({ where: { ...published, ...(itemType ? { itemType } : {}) }, orderBy: order, include: { mediaAsset: media } })
 
 export async function gallery(query) {
+  const where = { ...published, ...(query.edition ? { edition: query.edition } : {}) }
   const [items, total] = await Promise.all([
-    prisma.galleryItem.findMany({ where: published, orderBy: order, include: { mediaAsset: media }, ...pageArgs(query) }),
-    prisma.galleryItem.count({ where: published }),
+    prisma.galleryItem.findMany({ where, orderBy: order, include: { mediaAsset: media }, ...pageArgs(query) }),
+    prisma.galleryItem.count({ where }),
   ])
   return { items, total }
 }

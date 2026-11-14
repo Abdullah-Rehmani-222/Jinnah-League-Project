@@ -163,6 +163,8 @@ model GalleryItem {
   mediaAssetId String        @map("media_asset_id") @db.Uuid
   title        String?       @db.VarChar(150)
   description  String?
+  /// Festival edition used by the public Gallery filter, e.g. "JL'24". NULL = not assigned yet (shown under "All years" only).
+  edition      String?       @db.VarChar(20)
   displayOrder Int           @default(0) @map("display_order")
   status       ContentStatus @default(DRAFT)
   createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
@@ -171,6 +173,7 @@ model GalleryItem {
   mediaAsset MediaAsset @relation(fields: [mediaAssetId], references: [id], onDelete: Restrict)
 
   @@index([status, displayOrder])
+  @@index([edition, status, displayOrder])
   @@index([mediaAssetId])
   @@map("gallery_items")
 }

@@ -7,4 +7,5 @@ export const galleryService = createOrderedContentService({
   include: { mediaAsset: true },
   mediaFields: ['mediaAssetId'],
   imageOnlyFields: ['mediaAssetId'],
+  filterFields: ['edition'],
 })

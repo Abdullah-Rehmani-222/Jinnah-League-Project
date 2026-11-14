@@ -31,6 +31,29 @@ test('gallery: add from media library, update, publish, reorder, remove', async 
   assert.equal(await t.prisma.mediaAsset.count(), 2, 'removing a gallery entry keeps the media file')
 })
 
+test('gallery: edition is optional, validated, filterable in admin and public lists', async () => {
+  const b = await uploadPng(c, 'b.png')
+  const x = await uploadPng(c, 'x.png')
+  const g24 = (await c.post('/api/gallery', { mediaAssetId: img.id, edition: "JL'24", status: 'PUBLISHED' })).body.data
+  await c.post('/api/gallery', { mediaAssetId: b.id, edition: "JL'26", status: 'PUBLISHED' })
+  const none = (await c.post('/api/gallery', { mediaAssetId: x.id, status: 'PUBLISHED' })).body.data
+  assert.equal(g24.edition, "JL'24")
+  assert.equal(none.edition, null, 'edition is optional')
+  assert.equal((await c.post('/api/gallery', { mediaAssetId: img.id, edition: 'JL99' })).status, 422)
+
+  assert.equal((await c.get("/api/gallery?edition=JL'24")).body.data.length, 1)
+  assert.equal((await c.get('/api/gallery?edition=BOGUS')).status, 422)
+  assert.equal((await pub('gallery')).body.meta.total, 3, 'no filter = everything')
+  const only26 = (await pub("gallery?edition=JL'26")).body
+  assert.equal(only26.meta.total, 1)
+  assert.equal(only26.data[0].edition, "JL'26")
+  assert.equal((await pub("gallery?edition=JL'25")).body.data.length, 0)
+  assert.equal((await pub('gallery?edition=BOGUS')).status, 422)
+
+  assert.equal((await c.patch(`/api/gallery/${g24.id}`, { edition: '' })).body.data.edition, null, 'empty string clears it')
+  assert.equal((await c.patch(`/api/gallery/${none.id}`, { edition: "JL'23" })).body.data.edition, "JL'23")
+})
+
 test('gallery: media must exist and be an image', async () => {
   assert.equal((await c.post('/api/gallery', { mediaAssetId: '00000000-0000-4000-8000-000000000000' })).status, 422)
   assert.equal((await c.post('/api/gallery', {})).status, 422)

@@ -4,6 +4,7 @@ import { validate } from '../middleware/validate.js'
 import { ok } from '../utils/response.js'
 import { buildMeta, paginationQuery } from '../utils/pagination.js'
 import { slug } from '../validators/page.validator.js'
+import { editionEnum } from '../validators/gallery.validator.js'
 import * as pub from '../services/public.service.js'
 
 /** Read-only, unauthenticated endpoints for the public website. They only ever return PUBLISHED content. */
@@ -19,7 +20,7 @@ router.get('/social', async (_req, res) => ok(res, await pub.social()))
 router.get('/settings', async (_req, res) => ok(res, await pub.settings()))
 router.get('/press', validate({ query: z.object({ itemType: z.enum(['PRESS_COVERAGE', 'MEDIA_KIT']).optional() }) }), async (req, res) =>
   ok(res, await pub.press(req.valid.query)))
-router.get('/gallery', validate({ query: z.object(paginationQuery) }), async (req, res) => {
+router.get('/gallery', validate({ query: z.object({ ...paginationQuery, edition: editionEnum.optional() }) }), async (req, res) => {
   const { items, total } = await pub.gallery(req.valid.query)
   ok(res, items, undefined, buildMeta(req.valid.query, total))
 })

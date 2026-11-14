@@ -7,6 +7,7 @@ import { assetUrl, formatDate, isImageAsset } from '../lib/format'
 import { SelectField, TextAreaField, TextField, VisibilityField } from '../ui/Fields'
 import { MediaField } from '../ui/MediaPicker'
 import Button, { IconButton } from '../ui/Button'
+import { GALLERY_EDITIONS } from '../../lib/galleryEditions'
 import ContentModule from './ContentModule'
 
 const baseProps = (size, color) => ({
@@ -45,17 +46,26 @@ const galleryConfig = {
   name: (i) => i.title || i.mediaAsset?.originalName || 'Untitled image',
   subtitle: (i) => i.description,
   thumb: (i) => <Thumb asset={i.mediaAsset} icon={Images} />,
-  columns: [],
-  blank: { media: null, title: '', description: '', altText: '', status: 'DRAFT' },
-  toForm: (i) => ({ media: asset(i.mediaAsset), title: i.title ?? '', description: i.description ?? '', altText: i.mediaAsset?.altText ?? '', status: i.status }),
+  columns: [{ label: 'Edition', render: (i) => i.edition || '—' }],
+  filter: { key: 'edition', label: 'Edition', options: GALLERY_EDITIONS.map((e) => ({ value: e, label: e })) },
+  blank: { media: null, title: '', description: '', altText: '', edition: '', status: 'DRAFT' },
+  toForm: (i) => ({ media: asset(i.mediaAsset), title: i.title ?? '', description: i.description ?? '', altText: i.mediaAsset?.altText ?? '', edition: i.edition ?? '', status: i.status }),
   validate: (f) => (f.media ? {} : { mediaAssetId: 'Choose an image.' }),
-  toPayload: (f) => ({ mediaAssetId: f.media.id, title: str(f.title), description: str(f.description), status: f.status }),
+  toPayload: (f) => ({ mediaAssetId: f.media.id, title: str(f.title), description: str(f.description), edition: f.edition || null, status: f.status }),
   afterSave: async (f) => {
     if ((f.altText ?? '').trim() !== (f.media.altText ?? '')) await api.patch(`/media/${f.media.id}`, { altText: f.altText.trim() })
   },
   renderForm: ({ form, set, errors }) => (
     <>
       <MediaField label="Image" required value={form.media} error={errors.mediaAssetId} onChange={(media) => set({ media, altText: media?.altText ?? '' })} />
+      <SelectField
+        label="Edition"
+        hint={`Visitors can filter the Gallery by this. Leave empty to show the photo only under "All years".`}
+        value={form.edition}
+        error={errors.edition}
+        onChange={(e) => set({ edition: e.target.value })}
+        options={[{ value: '', label: 'No edition' }, ...GALLERY_EDITIONS.map((e) => ({ value: e, label: e }))]}
+      />
       <TextField label="Title" value={form.title} error={errors.title} onChange={(e) => set({ title: e.target.value })} />
       <TextAreaField label="Description" rows={3} value={form.description} error={errors.description} onChange={(e) => set({ description: e.target.value })} />
       <TextField label="Alternative text" hint="Describes the picture for screen readers. Saved with the image in the Media Library." value={form.altText} onChange={(e) => set({ altText: e.target.value })} />
